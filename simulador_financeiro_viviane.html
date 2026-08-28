@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro - HC-SR04</title>
+</head>
+<body>
+    <h2>SIMULADOR FINANCEIRO</h2>
+    <!-- <span>QUANTOS SENSORES SERÃO NECESSÁRIOS?: </span> -->
+    <button onclick="adicionarSensor()">Adicionar sensor ao carrinho</button> <br>
+    <div id="div_qtd_sensor"></div> <br>
+    <!-- <input placeholder="Insira aqui a quantidade" type="text" id="inp_qtd_sensor"> <br> -->
+    <br>
+    <span>QUAL PRODUTO SERÁ MONITORADO?: </span>
+    <input placeholder="Insira o nome do produto" type="text" id="inp_produto_monitorado"> <br>
+    <br>
+    <span>PREÇO DO PRODUTO: R$</span>
+    <input placeholder="Insira o preco com os centavos separados por ." type="text" id="inp_preco_produto"> <br>
+    <br>
+    <span>QUANTIDADE DO PRODUTO MONITORADO COMPRADA: </span>
+    <input placeholder="Insira a quantidade comprada" type="text" id="inp_qtd_produto"> <br>
+    <br>
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    let precoSensor = 9.50
+    let qtdSensor = 0
+
+    function adicionarSensor(){
+        qtdSensor += 1
+        div_qtd_sensor.innerHTML = `Quantidade de sensores HC-SR04: ${qtdSensor}`
+    }
+
+    function calcular(){
+        let produto = inp_produto_monitorado.value;
+        let qtdProduto = inp_qtd_produto.value;
+        let precoProduto = inp_preco_produto.value;
+
+        div_msg.innerHTML = `A quantidade de sensores desejada (${qtdSensor}) custará R$${precoSensor * qtdSensor} <br>
+                             Com nosso monitoramento, você perceberá que ${produto} te rendeu R$${precoProduto * qtdProduto} <br>
+                             Você lucraria R$${precoSensor - precoProduto}, levando em consideração o gasto do sensor.`
+    }
+</script>
