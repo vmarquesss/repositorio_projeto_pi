@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador financeiro</title>
+</head>
+<body>
+    <h2>Simulador financeiro</h2>
+    <h3>Sistema de monitoramento de fluxo e interesse do consumidor no varejo</h3>
+
+    <b>Esta calculadora permite que você simule o ROI (retorno sobre investimento) da contratação do seu serviço em seu mercado!</b></span><br><br>
+
+
+    <span>Clique nos botões para selecionar a quantidade desejada de sensores:<span> <br> <br>
+    <button onclick="botarSensor()">Adicionar sensor</button>
+    <button onclick="tirarSensor()">Retirar sensor</button> <br> <br>
+    <div id="div_msg">Número de sensores contratados: 0</div> <br> 
+
+
+    <!-- será que é melhor tirar o nome? será que é valido?-->
+    <label for="ipt_nomeProduto">Insira aqui o nome produto que será monitorado:</label> 
+    <input type="text" id="ipt_nomeProduto"> <br> <br>
+
+    <label for="ipt_qtdProduto">Insira aqui a quantidade do produto que será monitorado:</label>
+    <input type="text" id="ipt_qtdProduto"> <br> <br>
+
+    <label for ="ipt_precoProduto">Insira aqui o preço do produto que será monitorado:</label>
+    <input type="text" id="ipt_precoProduto"> <br> <br>
+
+    <label for ="ipt_qtdPessoas">Insira aqui quantas pessoas passaram por aquele produto:</label>
+    <input type="text" id="ipt_qtdPessoas"> <br>
+
+
+    <span><i>Observação: <br></i></span>
+    <span><i>Para essa simulação, consideraremos que 30% das pessoas que passaram pelo produto o compraram.</i></span> <br> <br>
+    <br> 
+    <button onclick="servicos()">Clique aqui para simular o ROI! </button>
+    <div id="div_simulacao"></div>
+
+
+    <div id="div_info"></div>
+    <span><b><br>Preços<br><br></b></span>
+    
+    <span>A contratação total do serviço custa R$4000 reais. <br>
+            A contratação inclui: <br>
+            - Sensor Arduino HC-SR04; <br>
+            - Site institucional com login e dashboard. <br> <br>
+
+            
+</body>
+</html>
+<script>
+    let contador = 0; 
+
+    function botarSensor(){ 
+    contador += 1;
+    div_msg.innerHTML = `Número de sensores contratados: ${contador}`
+    }
+
+    function tirarSensor(){ 
+    contador -=  1;
+    div_msg.innerHTML = `Número de sensores contratados: ${contador}`
+    }
+
+    function servicos(){
+        let nome = ipt_nomeProduto.value
+        let quantidade = Number(ipt_qtdProduto.value)
+        let preco = Number(ipt_precoProduto.value)
+        let pessoas = Number((ipt_qtdPessoas.value)*0.30)
+        //roi = ((receita - custo)/100) * 100
+        let receita = (preco*pessoas*quantidade)
+        let custo = 4000*contador
+        let roi = ((receita-custo)/custo*100)
+
+        if(contador <= 0){div_simulacao.innerHTML = `<br> <span style="color: red;"><b>Faça a simulação com pelo menos um sensor!</b></span>`}
+        else{div_simulacao.innerHTML = `<br> Considerando que você irá contratar ${contador} sensores (equivalente a ${custo}), <b>seu ROI será de ${roi}%</b>`}
+
+
+
+    }
+
+</script>
