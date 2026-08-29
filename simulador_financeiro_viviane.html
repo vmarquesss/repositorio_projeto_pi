@@ -6,9 +6,10 @@
     <title>Simulador Financeiro - HC-SR04</title>
 </head>
 <body>
-    <h2>SIMULADOR FINANCEIRO</h2>
+    <h1 style="background-color: lightblue;">SIMULADOR FINANCEIRO</h1>
     <!-- <span>QUANTOS SENSORES SERÃO NECESSÁRIOS?: </span> -->
     <button onclick="adicionarSensor()">Adicionar sensor ao carrinho</button> <br>
+    <button onclick="removerSensor()">Remover sensor do carrinho</button>
     <div id="div_qtd_sensor"></div> <br>
     <!-- <input placeholder="Insira aqui a quantidade" type="text" id="inp_qtd_sensor"> <br> -->
     <br>
@@ -16,13 +17,14 @@
     <input placeholder="Insira o nome do produto" type="text" id="inp_produto_monitorado"> <br>
     <br>
     <span>PREÇO DO PRODUTO: R$</span>
-    <input placeholder="Insira o preco com os centavos separados por ." type="text" id="inp_preco_produto"> <br>
+    <input placeholder="Insira o preco do produto" type="text" id="inp_preco_produto"> <br>
     <br>
     <span>QUANTIDADE DO PRODUTO MONITORADO COMPRADA: </span>
-    <input placeholder="Insira a quantidade comprada" type="text" id="inp_qtd_produto"> <br>
+    <input placeholder="Insira a quantidade" type="text" id="inp_qtd_produto"> <br>
     <br>
     <button onclick="calcular()">Calcular</button>
 
+    <h2 style="background-color: lightblue;">PREÇOS</h2>
     <div id="div_msg"></div>
 </body>
 </html>
@@ -35,13 +37,29 @@
         div_qtd_sensor.innerHTML = `Quantidade de sensores HC-SR04: ${qtdSensor}`
     }
 
+    function removerSensor(){
+        qtdSensor -= 1
+        div_qtd_sensor.innerHTML = `Quantidade de sensores HC-SR04: ${qtdSensor}`
+    }
+
     function calcular(){
         let produto = inp_produto_monitorado.value;
-        let qtdProduto = inp_qtd_produto.value;
-        let precoProduto = inp_preco_produto.value;
+        let qtdProduto = Number(inp_qtd_produto.value);
+        let precoProduto = Number(inp_preco_produto.value);
 
-        div_msg.innerHTML = `A quantidade de sensores desejada (${qtdSensor}) custará R$${precoSensor * qtdSensor} <br>
-                             Com nosso monitoramento, você perceberá que ${produto} te rendeu R$${precoProduto * qtdProduto} <br>
-                             Você lucraria R$${precoSensor - precoProduto}, levando em consideração o gasto do sensor.`
+        let rendaProduto = precoProduto * qtdProduto
+        let sensorTotal = precoSensor * qtdSensor
+        let lucro = rendaProduto - sensorTotal
+        let porcentagemLucro = lucro * 100 / 9.5
+
+        if (qtdSensor < 0) {
+            div_msg.innerHTML = `<b style='color:red'>Adicione ao menos um sensor ao carrinho para realizar a simulação!</b>`
+        } 
+
+        if (produto == ''){
+            div_msg.innerHTML = `<b style='color:red'>Insira o nome do produto!</b>`
+        }  else {div_msg.innerHTML = `A quantidade de sensores desejada <b>(${qtdSensor})</b> custará <b>R$${sensorTotal}</b> <br>
+                             Com nosso monitoramento, você perceberá que <b>${produto}</b> te rendeu <b>R$${rendaProduto}</b> <br>
+                             Você lucraria <b>R$${lucro}</b> em cima do gasto do sensor. (${porcentagemLucro.toFixed(2)}% de lucro)`}
     }
 </script>
