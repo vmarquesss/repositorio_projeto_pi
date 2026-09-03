@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Info Connect</title>
+</head>
+<body>
+    <h1>Simulador Financeiro</h1>
+    <h5>DESCONTO DE 10% A PARTIR DE 3 PRATELEIRAS <br>
+    LEVANDO ATÉ 10 PRATELEIRAS PELO PREÇO DE 9</h5>
+    <span>Clique para adicionar prateleira: </span>
+    <input type="text" id="ipt_prat">
+    <button onclick="adicionar()">Adicionar</button>
+    <div id="div_result"></div>
+</body>
+</html>
+<script>
+        let base = 1000;
+
+    function adicionar() {
+        let n1 = Number(ipt_prat.value)
+        let preco = n1 * base;
+        let desconto = preco * 0.1
+        let precoFinal = preco - desconto
+        let serv = Number(500)
+
+        if(preco <= 2000) {
+            div_result.innerHTML=`Sem aplicação de desconto!<br>Você pagará R$${preco} por prateleira + custos de serviço(R$${serv})<br>PREÇO FINAL A SER PAGO: R$${preco + serv}`
+        }else if(precoFinal < 9000) {
+            div_result.innerHTML =`Desconto aplicado!<br>Você pagará R$${precoFinal} por prateleira + custos de serviço(R$${serv})<br>PREÇO FINAL A SER PAGO: R$${precoFinal + serv}`
+        } else if(precoFinal == 9000) {
+            div_result.innerHTML=`Parabéns, você levará uma prateleira de graça!<br>Você pagará R$${precoFinal} + custos de serviço(R$${serv}), levando 10 prateleiras pelo preço de 9!<br>PREÇO FINAL A SER PAGO: R$${precoFinal + serv}`
+        } else {
+            div_result.innerHTML=`Desconto aplicado!<br>Você pagará R$${precoFinal} por prateleira + custos de serviço(R$${serv})<br>PREÇO FINAL A SER PAGO: R$${precoFinal + serv}`
+        }
+
+        div_result.innerHTML+=`<br><button>Ir para página de pagamento</button>`
+        
+
+    }
+</script>
