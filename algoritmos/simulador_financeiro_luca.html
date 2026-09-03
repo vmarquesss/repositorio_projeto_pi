@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span>Esta calculadora tem o intuito de mostrar a espectativa de crescimento no lucro após a instalação e utilização dos dados do sistema.</span> <br>
+    <span>Digite o produto em questão que iremos calcular: </span>
+    <input type="text" id="iptProd"> <br>
+    <span>Digite o preço: </span>
+    <input type="text" id="iptPrecoProd"><br>
+    <span>Digite a quantidade de engradados vendidos por mês: </span>
+    <input type="text" id="iptVendaProd">
+    <button onclick="calcular()">Calcular</button>
+    <div id="div_exibir"><b>Aqui será exibido o valor calculado</b></div>
+</body>
+<script>
+    function calcular() {
+        let nome = iptProd.value;
+        let preco = Number(iptPrecoProd.value);
+        let venda = Number(iptVendaProd.value);
+        let mensagem = `<h3>A expectativa de crescimento na receita do produto é de <b style="color: red;">10%</b>.</h3><br>
+        Assim o produto, ${nome}, terá uma quantidade de vendas esperadas de: ${venda*1.1}%.<br><br>
+        E por fim o valor total esperado de crescer na receita será R$${(preco*(venda*1.1))-preco}.`;
+        div_exibir.innerHTML = mensagem;
+}
+</script>
+</html>
