@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira</title>
+</head>
+<body>
+    <h2>Calculadora de Perdas</h2>
+    <span>
+        Calcule quanto o supermercado pode deixar de ganhar quando um produto fica indisponível na prateleira:
+    </span>
+    <br>
+    <br>
+    <div>
+        <span>Preço do produto:</span>
+        <br>
+        <input type="number" id="ipt_preco">
+    </div>
+    <br>
+    <div>
+        <span>Vendas médias por hora:</span>
+        <br>
+        <input type="text" id="ipt_vendas">
+        <br>
+    </div>
+    <br>
+    <div>
+        <span>Tempo de prateleira vazia (minutos):</span>
+        <br>
+        <input type="number" id="ipt_minutos">
+    </div>
+    <br>
+    <button onclick="Calcular()">Calcular perda</button>
+    <br>
+    <br>
+    <div id="div_resposta"></div>
+    <script>
+        function Calcular() {
+                let preco = Number(ipt_preco.value)
+                let vendas = Number(ipt_vendas.value)
+                let minutos = Number(ipt_minutos.value)
+                let horas = minutos / 60
+                let unidades = horas * vendas
+                let perda = unidades * preco
+
+
+            if (
+                ipt_preco.value === "" ||
+                ipt_vendas.value === "" ||
+                ipt_minutos.value === ""
+            ) {
+
+                alert(`Preencha todos os campos.`)
+
+            }
+            else {div_resposta.innerHTML = `
+                    Tempo de prateleira vazia: ${minutos} minutos
+                    <br>
+                    Vendas que poderiam ocorrer: ${unidades} unidades
+                    <br>
+                    Perda estimada: R$ ${perda.toFixed(2)}`
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
