@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ptBR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira</title>
+</head>
+<body>
+
+    <h1>Calculo receita total de produtos específicos.</h1>
+
+    <label for="ipt_nome_produto">Insira o nome do produto que deseja analisar</label>
+    <br>
+    <input type="text" id="ipt_nome_produto">
+    <br>
+
+    <label for="ipt_valor_venda_produto">Insira o valor de venda desse produto.</label>
+    <br>
+    <input type="text" id="ipt_valor_venda_produto" placeholder="Por exemplo: 3.99">
+    <br>  
+
+    <label for="ipt_quant_vendida">Insira a quantidade vendida desse produto.</label>
+    <br>
+    <input type="text" id="ipt_quant_vendida" placeholder="Por mês.">
+    <br>  
+
+
+    <label for="ipt_valor_investido_produto">Insira o valor investido nesse produto.</label>
+    <br>
+    <input type="text" id="ipt_valor_investido_produto" placeholder="Por exemplo: 3.99">
+    <br>  
+
+
+    <label for="ipt_quant_pessoas">Insira a quantidade de pessoas que passaram por esse produto no mês passado.</label>
+    <br>
+    <input type="text" id="ipt_quant_pessoas">
+    <br>
+
+
+    <button onclick="calcularVenda()">Calcular</button>
+
+    <div id="div_exibir_vendas"></div>
+
+    <br>
+
+    <h1>Verificação do valor para instalação do sensor</h1>
+
+    <label for="ipt_quant_sensor">Insira quantos sensores o cliente comprará.</label>
+    <br>
+    <input type="text" id="ipt_quant_sensor">
+    <br>
+
+    <label for="ipt_quant_locais">Insira a quantidade de sedes que serão colocados os sensores.</label>
+    <br>
+    <input type="text" id="ipt_quant_locais">
+    <br>
+
+    <label for="ipt_valor_mao">Insira o valor total da mão de obra.</label>
+    <br>
+    <input type="text" id="ipt_valor_mao">
+    <br>
+
+    <button onclick="calcularInstalacao()">Calcular</button>
+    <br>
+
+    <div id="div_exibir_instalacao"></div>
+    <br>
+
+    <h1>Calculo de interesse por produtos</h1>
+
+    <label for="ipt_nome_produto_analise">Insira o nome do produto que deseja analisar </label>
+    <br>
+    <input type="text" id="ipt_nome_produto_analise">
+    <br>
+
+    <label for="ipt_quant_pessoas_analise">Insira a quantidade de pessoas que passaram pelo corredor do produto por mês </label>
+    <br>
+    <input type="text" id="ipt_quant_pessoas_analise">
+    <br>
+    
+    <label for="ipt_quant_vendas_analise">Insira a quantidade de vendas desse produto </label>
+    <br>
+    <input type="text" id="ipt_quant_vendas_analise">
+    <br>
+
+    <label for="ipt_quant_estoque_analise">Insira o valor total de estoque desse produto</label>
+    <br>
+    <input type="text" id="ipt_quant_estoque_analise">
+    <br>
+
+    <button onclick="calcularInteresse()">Analisar</button>
+    <br>
+
+    <div id="div_exibir_interesse"></div>
+
+
+
+
+</body>
+</html>
+
+<script>
+
+    function calcularVenda(){
+
+        let nomeProduto = ipt_nome_produto.value;
+
+        let valorVendaProduto = Number(ipt_valor_venda_produto.value);
+
+        let quantVendaProduto = Number(ipt_quant_vendida.value);
+
+        let valorInvestidoProduto = Number(ipt_valor_investido_produto.value);
+
+        let quantPessoas = Number(ipt_quant_pessoas.value);
+
+        let valorTotalProduto = (valorVendaProduto * quantVendaProduto).toFixed(2);
+
+        let receitaFinal = (valorTotalProduto - valorInvestidoProduto).toFixed(2);
+
+        let mediaVendasPessoas = (quantVendaProduto / quantPessoas ).toFixed(2);
+
+        let mensagemPadrao = `O produto ${nomeProduto} vendeu ${quantVendaProduto} unidades por R$${valorVendaProduto}, totalizando R$${valorTotalProduto}. Teve um valor total investido de R$${valorInvestidoProduto}, por tanto, teve uma receita final de R$${receitaFinal}. A média de vendas por pessoa foi ${mediaVendasPessoas}`;
+
+        let mensagemLucrou = `<span style="color: green; font-weight: bold;">Parabéns! Você lucrou esse mês. <br> </span>`
+
+        let mensagemPerdeuDinheiro = `<span style="color: red; font-weight: bold;">Infelizmente você perdeu dinheiro esse mês. <br> </span>`
+
+
+        if (receitaFinal > 0) {
+
+            div_exibir_vendas.innerHTML = mensagemLucrou + mensagemPadrao ;
+
+        } else {
+
+            div_exibir_vendas.innerHTML = mensagemPerdeuDinheiro + mensagemPadrao;
+
+        }
+
+    }
+
+    function calcularInstalacao(){
+
+        let quantSensor = Number(ipt_quant_sensor.value);
+
+        let quantLocais = Number(ipt_quant_locais.value);
+
+        let custoMaoObra = Number(ipt_valor_mao.value);
+
+        let custoSensor = 500;
+
+        let custoTotal = (quantSensor * custoSensor * quantLocais) + custoMaoObra;
+
+        let mensagem = `Para instalar ${quantSensor} sensores em ${quantLocais} sedes diferentes, será gasto R${custoTotal} no total.`
+
+        let mensagemErro = `<span style="color: red; font-weight: bold;">Erro! Algum valor digitado é negativo, verifique se digitou corretamente os valores.</span>`
+
+        if (quantSensor > 0 && quantLocais > 0 && custoMaoObra > 0) {
+
+            div_exibir_instalacao.innerHTML = mensagem;
+
+        } else {
+
+            div_exibir_instalacao.innerHTML = mensagemErro;
+
+        }
+
+
+    }
+
+
+
+    function calcularInteresse(){
+
+        let nomeProduto = ipt_nome_produto_analise.value;
+
+        let quantPessoasPassadas = Number(ipt_quant_pessoas_analise.value);
+
+        let quantVendas = Number(ipt_quant_vendas_analise.value);
+
+        let produtosEstoque = Number(ipt_quant_estoque_analise.value);
+
+        let porcentagemVendasPorPessoa = (quantVendas / quantPessoasPassadas ) * 100;
+
+        let porcentagemComparacao = (quantVendas / produtosEstoque) * 100;
+
+        let mensagemPadrao = `O produto ${nomeProduto} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoa}%, isso equivale à ${porcentagemComparacao}% da quantidade total do produto guardado no estoque.`
+
+        let mensagemInteresse = `<span style="color: green; font-weight: bold;">Parabéns! As pessoas parecem estar muito interessadas nesse produto.</span> <br>` + mensagemPadrao;
+
+        let mensagemDesinteresse = `<span style="color: red; font-weight: bold;">Parece que as pessoas não estão muito interessadas nesse produto. Talvez seja melhor troca-lo de lugar.</span> <br>` + mensagemPadrao;
+
+
+        if (porcentagemVendasPorPessoa > 40) {
+
+        div_exibir_interesse.innerHTML = mensagemInteresse;
+
+        } else if (porcentagemVendasPorPessoa > 10){
+
+        div_exibir_interesse.innerHTML = mensagemPadrao;
+
+        } else {
+
+         div_exibir_interesse.innerHTML = mensagemDesinteresse;           
+
+        }
+
+
+
+
+
+    }
+</script>
