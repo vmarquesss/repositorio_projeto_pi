@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira</title>
+</head>
+<style>
+    * {font-family: Arial, Helvetica, sans-serif;}
+</style>
+<body>
+    <h2>Calculadora Financeira para calcular a taxa de conversão para compra.</h2> <br>
+    <span>Quantidade de pessoas que passaram pela prateleira:</span>
+    <input type="text" id="input_pessoa"> <br> <br>
+    <span>Quantidade de pessoas que compraram de fato:</span> <span></span>
+    <input type="text" id="input_compra"> <br> <br>
+    <button onclick="calcular()">Gerar taxa de conversão</button> <br> 
+    <div id="div_mensagem"></div>
+</body> 
+</html>
+<script>
+
+    function calcular(){
+        let pessoas = Number(input_pessoa.value)
+        let compras = Number(input_compra.value)
+        let conversao = (compras * 100) / pessoas
+        div_mensagem.innerHTML = `A taxa de conversão de pessoas que passaram pela prateleira para compras foi de ${conversao}%`
+    }
+
+</script>
