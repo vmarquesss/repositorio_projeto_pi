@@ -1,28 +1,27 @@
-CREATE DATABASE entregaveis;
-USE entregaveis;
+CREATE DATABASE info_connect;
+USE info_connect;
 
 CREATE TABLE cliente(
 idCliente			INT PRIMARY KEY AUTO_INCREMENT,
 cnpj				CHAR(14) UNIQUE,
-nomeEmpresa			VARCHAR(50),
+nomeFantasia		VARCHAR(50),
 nomeResponsavel		VARCHAR(20),
-endereco			VARCHAR(100)
+telefone			CHAR(11)
 );
 
 INSERT INTO cliente VALUES
-(default, '12.345.678/9098-76', 'XPTO Congelados', 'Irineu Irinoso', 'Rua Alfredo, 68'),
-(default, '09.876.543/2123-45', 'ABC Salgadinhos', 'Luiz Gonzaga', 'Rua Presidente, 102');
+(default, '12.345.678/9098-76', 'XPTO Congelados', 'Irineu Irinoso', '11999999999'),
+(default, '09.876.543/2123-45', 'ABC Salgadinhos', 'Luiz Gonzaga', '11988888888');
 
 CREATE TABLE sensor(
 idSensor		INT PRIMARY KEY AUTO_INCREMENT,
-distancia		FLOAT,
-corredorSensor	VARCHAR(10),
-fluxoDia		INT
+corredorSensor	INT,
+fluxo			INT -- pessoas por dia
 );
 
 INSERT INTO sensor VALUES
-(default, 0.75, 'Corredor 3', 229),
-(default, 1.2, 'Corredor 5', 123);
+(default, 1, 123),
+(default, 3, 111);
 
 CREATE TABLE produto(
 idProduto		INT PRIMARY KEY AUTO_INCREMENT,
@@ -41,17 +40,16 @@ SELECT * FROM sensor;
 SELECT * FROM produto;
 
 SELECT 
-	CONCAT('Empresa: ', nomeEmpresa, ' | Responsável: ', nomeResponsavel, ' | Endereço: ', endereco) AS Empresa
+	CONCAT('Empresa: ', nomeFantasia, ' | Responsável: ', nomeResponsavel, ' | Contato: ', telefone) AS 'Dados do Cliente'
 FROM cliente;
 
 SELECT
-	CONCAT('Corredor: ', corredorSensor, ' | Distância Média das Prateleiras: ', (distancia / 24), ' distancia/dia | Fluxo por dia: ', (fluxoDia/24)) AS SENSOR_HCSR04
+	CONCAT('Corredor: ', corredorSensor, ' | Fluxo de pessoas por dia: ', fluxo) AS 'Dados do Sensor'
 FROM sensor;
 
-SELECT
-	CONCAT('Nome do produto: ', nomeProduto, ' | Marca do produto: ', marcaProduto, 
-    ' | Quantidade em estoque: ', qtdEstoque, ' | Quantidade vendida: ', qtdVendido, 
-    ' | Diferença no Estoque: ', (qtdEstoque - qtdVendido)) AS Produtos
+SELECT 
+	CONCAT('Produto: ', nomeProduto, ' | Marca: ', marcaProduto, ' | Quantidade em estoque: ', qtdEstoque, 
+    ' | Quantidade vendida: ', qtdVendido, ' | Quantidade Atual: ', (qtdEstoque - qtdVendido)) AS 'Dados do Produto'
 FROM produto;
 
 -- SET SQL_UPDATES_SAFEMODE = 1;
