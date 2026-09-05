@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+</head>
+<body>
+    <h1>Simulador Financeiro</h1>
+<!-- gerenciamento de estoque 
+ erro de ma organização do mercado no estoque, com essa ma organização, pode acontecer de
+ uma quantidade de produtos nao ir para as prateleiras e isso gera perda, com esse simulador financeiro, vai 
+ ser possivel vizualizar se o mercado esta cumprindo sua obrigação e ver o que dar mais atenção -->
+
+    <h2>Gerenciamento de estoque</h2>
+    Com esse simulador, vai ser possivel vizualizar a quantidade de produto que entrou pra venda ou não por <br> falta 
+    de organização do próprio estabelecimento, não por perda de produto pelo distribuidor ou defeito do produto. <br> <br>
+
+    <b>Digite o produto que gostaria de verificar: <br></b>
+    - <span style="color: brown;"><b>Linguiça <br></b></span> 
+    - <span style="color: rgb(21, 21, 165);"><b>Filé de peito <br></b></span> 
+    - <span style="color: rgb(207, 89, 110);"><b>Mortadela <br></b></span> 
+    - <span style="color: rgb(209, 117, 43);"><b>Nuggets <br></b><br></span> 
+
+    <input placeholder="Digite o produto" type="text" id="ipt_produto"> <br> <br>
+
+    <b>Qual a quantidade de produtos que entrou este mês? <br></b>
+    <input placeholder="Digite a quantidade de entrada" type="text" id="ipt_entrada"> <br> <br>
+    
+    <b>Qual a quantidade vendida deste produto no mês? <br></b>
+    <input placeholder="Digite a quantidade de venda" type="text" id="ipt_venda"> <br> <br>
+
+    <button onclick="verificar()"><b>Verificar</b></button>
+
+    <div id="div_exibir"></div>
+    
+</body>
+</html>
+<!-- 
+    -->
+<script>
+    function verificar() {
+        let produto = ipt_produto.value
+        let entrada = Number(ipt_entrada.value)
+        let saida = Number(ipt_venda.value)
+        
+        let estoque = entrada - saida 
+        let estoquePorcent = estoque * 100 / entrada
+
+        if (produto == 'Linguiça') {
+            if (estoquePorcent <= 5) {
+                div_exibir.innerHTML += `<br> <b>Muito bom!</b> Só sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: brown;">${produto} </span>sem vender.<br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`
+            } else if (estoquePorcent <= 20) {
+                div_exibir.innerHTML += `<br> <b>Atenção:</b> sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: brown;">${produto} </span> sem vender este mês. <br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`
+            } else {
+                div_exibir.innerHTML += `<br> <b>Alerta!</b> Sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: brown;">${produto} </span> sem vender. Verificar organização no estoque. <br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`}
+        
+            } else if (produto == 'Filé de peito') {
+            if (estoquePorcent <= 5) {
+                div_exibir.innerHTML += `<br> <b>Muito bom!</b> Só sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(21, 21, 165);">${produto} </span>sem vender.<br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`
+            } else if (estoquePorcent <= 20) {
+                div_exibir.innerHTML += `<br> <b>Atenção:</b> sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(21, 21, 165);">${produto} </span> sem vender este mês. <br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`
+            } else {
+                div_exibir.innerHTML += `<br> <b>Alerta!</b> Sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(21, 21, 165);">${produto} </span> sem vender. Verificar organização no estoque. <br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`}
+
+            } else if (produto == 'Mortadela') {
+             if (estoquePorcent <= 5) {
+                div_exibir.innerHTML += `<br> <b>Muito bom!</b> Só sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(207, 89, 110);">${produto} </span>sem vender.<br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`
+            } else if (estoquePorcent <= 20) {
+                div_exibir.innerHTML += `<br> <b>Atenção:</b> sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(207, 89, 110);">${produto} </span> sem vender este mês. <br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`
+            } else {
+                div_exibir.innerHTML += `<br> <b>Alerta!</b> Sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(207, 89, 110);">${produto} </span> sem vender. Verificar organização no estoque. <br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`}
+
+            } else if (produto == 'Nuggets') {
+            if (estoquePorcent <= 5) {
+                div_exibir.innerHTML += `<br> <b>Muito bom!</b> Só sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(209, 117, 43);">${produto} </span>sem vender.<br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`
+            } else if (estoquePorcent <= 20) {
+                div_exibir.innerHTML += `<br> <b>Atenção:</b> sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(209, 117, 43);">${produto} </span> sem vender este mês. <br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`
+            } else {
+                div_exibir.innerHTML += `<br> <b>Alerta!</b> Sobrou ${estoquePorcent.toFixed(2)}% de <span style="color: rgb(209, 117, 43);">${produto} </span> sem vender. Verificar organização no estoque. <br> <b>Entrou:</b> ${entrada} unidades <br> <b>Vendeu:</b> ${saida} unidades <br> <b>Sobrou</b>: ${estoque} unidades <br>`}
+
+    } else {
+        div_exibir.innerHTML = `Produto não encontrado. <br> Digite: Linguiça, Filé de peito, Mortadela ou Nuggets.`
+    } 
+    }
+</script>
