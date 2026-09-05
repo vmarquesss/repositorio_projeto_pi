@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+</head>
+
+<body>
+    <h1>Simulador financeiro de análise de custo de sensor por PDV</h1>
+    <div style="background-color: bisque; padding: 10px;">
+        <span>Quantos display de vendas você vai precisar?</span><br>
+        <input type="text" id="inpt_qntdSensores"><br><br>
+    </div>
+    <div style="background-color: antiquewhite; padding: 10px;">
+        <span>Qual o seu budget?</span><br>
+        <input type="text" id="inpt_budget"><br><br>
+    </div>
+    <div style="padding: 10px">
+        <button onclick="simular()">Simule</button><br>
+        <div id="div_mensagem" style="border: cornflowerblue;"></div>
+    </div>
+
+</body>
+
+</html>
+<script>
+
+    let precoCameraIA = 3875
+    let precoWifiTracker = 3625
+    let precoBeaconBluetooth = 1250
+    let precoSensorUltrassonico = 50
+
+    function simular() {
+        let qntdSensores = Number(inpt_qntdSensores.value);
+        let budget = Number(inpt_budget.value);
+
+        let custoCameraIA = Number(precoCameraIA * qntdSensores).toFixed(2);
+        let custoWifiTracker = Number(precoWifiTracker * qntdSensores).toFixed(2);
+        let custoBeaconBluetooth = Number(precoBeaconBluetooth * qntdSensores).toFixed(2);
+        let custoSensorUltrassonico = Number(precoSensorUltrassonico * qntdSensores).toFixed(2);
+
+        let porcentagemBudgetCamera = Number((custoCameraIA / budget) * 100).toFixed(2);
+        let porcentagemBudgetWifi = Number((custoWifiTracker / budget) * 100).toFixed(2);
+        let porcentagemBudgetBluetooth = Number((custoBeaconBluetooth / budget) * 100).toFixed(2);
+        let porcentagemBudgetUltrassonico = Number((custoSensorUltrassonico / budget) * 100).toFixed(2);
+
+        let economia = budget - custoSensorUltrassonico;
+        if (qntdSensores < 0){
+            div_mensagem.innerHTML = `Por favor digite um número positivo`; 
+        }else {
+
+        
+        let mensagemSCD = `Nosso Sistema<br>`;
+
+        let mensagemComparativos = `COMPARATIVOS<br>`;
+
+        let mensagemUltrassonico = `Sistema com Sensor Ultrassonico; <br>custo por unidade: R$${precoSensorUltrassonico}. <br><br>Contratando ${qntdSensores} sensores, o custo total sai por: R$${custoSensorUltrassonico}.<br> Porcentagem sobre o budget: ${porcentagemBudgetUltrassonico}% de R$${budget}.<br>Você economizou R$${economia}. <br>Esse sistema não viola a Lei Geral de Proteção de Dados Pessoais(LGPD).<br><br>`;
+
+        let mensagemBluetooth = `Sistema com Sensor Beacon Bluetooth; <br>Contratando ${qntdSensores} sensores, o custo total sai por: R$${precoBeaconBluetooth}. <br>Obrigatório: O cliente precisa estar com o Bluetooth ligado e ter o app do mercado instalado.<br>Custo total: R$${custoBeaconBluetooth}, Porcentagem sobre o budget: ${porcentagemBudgetBluetooth}% de R$${budget}. <br><br>`;
+
+        let mensagemWifi = `Sistema com Sensor Wi-fi Tracker + Analytics; <br>Contratando ${qntdSensores} sensores, o custo total sai por: R$${precoWifiTracker}.<br>Baixa precisão para apenas uma gôndola e alto custo do sistema para filtrar os endereços MAC que não clientes.<br>Custo total: R$${custoWifiTracker}, Porcentagem sobre o budget: ${porcentagemBudgetWifi}% de R$${budget}. <br><br>`;
+
+        let mensagemCamera = `|Sistema Camêra de reconhecimento facial + IA; <br>Contratando ${qntdSensores} sensores, o custo total sai por: R$${precoCameraIA}.<br>Custo alto de instalação e manutenção e assinatura IA.<br>Custo total: R$${custoCameraIA}, Porcentagem sobre o budget: ${porcentagemBudgetCamera}%  de R$${budget}.<br><br>`;
+
+        let mensagemLGPD = `Esses sistemas de sensores violam a Lei Geral de  Proteção de Dados Pessoais (LGPD).<br><br>`;
+
+        let mensagemEstruturada = mensagemSCD + mensagemUltrassonico + mensagemComparativos + mensagemBluetooth + mensagemWifi + mensagemCamera + mensagemLGPD;
+
+        div_mensagem.innerHTML = mensagemEstruturada;
+        }
+    }
+</script>
