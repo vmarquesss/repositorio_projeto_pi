@@ -3,43 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Índice de Ruptura</title>
 </head>
 <body>
 
-    <h1>Indice de ruptura</h1>
+    <h1>Índice de Ruptura</h1>
     
-    <span>Falta de produto na contagem :</span> <br>
-    <input type="text" id="inp_total"><br>
+    <span>Falta de produto nas prateleiras:</span> <br>
+    <input type="text" id="inp_falta"><br>
 
-    <span>Total do produto no inicio mês:</span> <br>
-    <input type="text" id="inp_itens"><br>
+    <span>Total do produto no estoque no início do mês:</span> <br>
+    <input type="text" id="inp_estoque"><br>
 
-    <button onclick="ruptura()">Analisar ruptura</button> 
-     <div id="div_msg"></div>
-
-    <h1>Quebra</h1>
-
-    <span>Vendas diarias:</span> <br>
-    <input type="text" id="inp_diaria"><br>
-
-    <span>Dias sem restoques:</span> <br>
-    <input type="text" id="inp_zerado"><br>
-
-    <span>Preço do produto:</span> <br>
-    <input type="text" id="inp_preco"><br>
-
-    <button onclick="quebra()">Analisar Quebra</button>
-    <div id="div_msg2"></div>
-
-
-
-
-
-    
-
-   
-
+    <button onclick="ruptura()">Analisar ruptura</button>  
+    <div id="div_msg"></div>
 
 </body>
 </html>
@@ -50,26 +27,28 @@
 
     function ruptura() {
 
-        let totalItens = Number(inp_itens.value);
-        let totalVendido = Number(inp_total.value);
+        let estoqueInicial = Number(inp_estoque.value);
+        let faltaProduto = Number(inp_falta.value);
 
-        let rup = (totalVendido / totalItens) * 100;
+        let rup = (faltaProduto / estoqueInicial) * 100;
+
         mes += 1;
-        div_msg.innerHTML += `Mes: ${mes} <br> foi registrado ${rup.toFixed(2)}%  de ruptura de estoque, levando a perda de cliente <br>`;
+        div_msg.innerHTML += `Relatorio: ${mes} <br> foi registrado ${rup.toFixed(2)}% de ruptura de estoque <br>`;
+
+        if (estoqueInicial <= 0){
+            mes -= 1
+            div_msg.innerHTML = `<span style="color: red;">Por favor, insira valores válidos maiores que zero.</span><br>`;
+
+        }else if(rup <= 2){
+            div_msg.innerHTML += `<span style="color: green;">Sem preucupação por enquanto</span> <br>`
+        } else if (rup >= 20 ){
+            div_msg.innerHTML += `<span style="color: red;background-color: black;">Alta taxa de ruptura, possiveis grande perda de lucro</span> <br>`
+        } else {
+            div_msg.innerHTML += `<span style="color: yellow;background-color: black;">Dar uma atenção a mais</span> <br>`
+        }
 
 
+        
     }
-
-    function quebra(){
-
-        let zerado = Number(inp_zerado.value);
-        let diario = Number(inp_diaria.value);
-        let preco = Number(inp_preco.value);
-
-        let quebra = diario * zerado * preco;
-        div_msg2.innerHTML += `Nos ${zerado} dias que não foram feito estoques houve uma perda de R$${quebra} no final mês.<br> `;
-
-    }
-
 
 </script>
