@@ -1,3 +1,17 @@
+-- GRUPO 5:
+-- BIANCA FERREIRA DE MELO - RA: 01262000
+-- GABRIELA FERREIRA CAMARGO MARCELINO - RA: 01262007
+-- GREGORY LOPES PEDROSO CASARINI - RA: 01262110
+-- ISABELLE SILVA BACCO - RA: 01262085
+-- JULIA CAROLINA BRITO DOS SANTOS - RA: 01262062
+-- KAUÃ AUGUSTO DE ARAÚJO ÁGUAS - RA: 01262114
+-- LAURA DE ARAÚJO - RA: 01262023
+-- LUCA KENZO PONGELUPPE YAMAMURA - RA: 01262121
+-- PEDRO HENRIQUE RODRIGUES DO AMARAL - RA: 01262017
+-- VIVIANE MEIRA MARQUES - RA: 01262064
+-- ZANEE LOPES PEREIRA - RA: 01262083
+
+
 CREATE DATABASE infoconnect; 
 
 USE infoconnect;
@@ -20,11 +34,12 @@ CREATE TABLE sensor (
 idSensor INT PRIMARY KEY AUTO_INCREMENT,
 tipoSensor VARCHAR(10),
 dtInstalacao DATETIME,
-locall VARCHAR(20) NOT NULL,
+corredor INT NOT NULL,
 statuss VARCHAR(20) NOT NULL,
 CONSTRAINT chkStatus CHECK( statuss IN('Ativo', 'Inativo', 'Em manutenção')),
 ultimaManutencao DATETIME
 );
+
 
 CREATE TABLE monitoramento (
 idMonitoramento INT PRIMARY KEY AUTO_INCREMENT,
@@ -47,16 +62,16 @@ INSERT INTO cliente VALUES
 (default,'Mercadinho São Lucas', '01.234.567/0001-09', 'Camila Ferreira', '85988776655', 'camila@mercadinhosaolucas.com', '2025-10-11', '2027-10-11', 'Fortaleza', 'CE');
 
 INSERT INTO sensor VALUES
-(default,'HC-SR04', '2025-01-10 08:30:00', 'Entrada', 'Ativo', '2025-08-10 09:00:00'),
-(default,'HC-SR04', '2025-01-15 10:00:00', 'Recepção', 'Ativo', '2025-07-15 10:30:00'),
-(default,'HC-SR04', '2025-02-05 14:20:00', 'Corredor', 'Inativo', '2025-08-05 15:00:00'),
-(default,'HC-SR04', '2025-02-18 09:15:00', 'Saída', 'Ativo', '2025-08-18 09:45:00'),
-(default,'HC-SR04', '2025-03-12 11:30:00', 'Estacionamento', 'Em manutenção', '2025-09-01 13:00:00'),
-(default,'HC-SR04', '2025-04-20 16:00:00', 'Sala 01', 'Ativo', '2025-08-20 16:30:00'),
-(default,'HC-SR04', '2025-05-08 08:45:00', 'Sala 02', 'Ativo', '2025-08-08 09:15:00'),
-(default,'HC-SR04', '2025-06-14 12:10:00', 'Hall', 'Inativo', '2025-07-14 12:40:00'),
-(default,'HC-SR04', '2025-07-25 15:30:00', 'Entrada', 'Ativo', '2025-08-25 16:00:00'),
-(default,'HC-SR04', '2025-08-03 10:20:00', 'Corredor', 'Em manutenção', '2025-09-03 11:00:00');
+(default,'HC-SR04', '2025-01-10 08:30:00', 1, 'Ativo', '2025-08-10 09:00:00'),
+(default,'HC-SR04', '2025-01-15 10:00:00', 3, 'Ativo', '2025-07-15 10:30:00'),
+(default,'HC-SR04', '2025-02-05 14:20:00', 5, 'Inativo', '2025-08-05 15:00:00'),
+(default,'HC-SR04', '2025-02-18 09:15:00', 4, 'Ativo', '2025-08-18 09:45:00'),
+(default,'HC-SR04', '2025-03-12 11:30:00', 2, 'Em manutenção', '2025-09-01 13:00:00'),
+(default,'HC-SR04', '2025-04-20 16:00:00', 10, 'Ativo', '2025-08-20 16:30:00'),
+(default,'HC-SR04', '2025-05-08 08:45:00', 15, 'Ativo', '2025-08-08 09:15:00'),
+(default,'HC-SR04', '2025-06-14 12:10:00', 11, 'Inativo', '2025-07-14 12:40:00'),
+(default,'HC-SR04', '2025-07-25 15:30:00', 4, 'Ativo', '2025-08-25 16:00:00'),
+(default,'HC-SR04', '2025-08-03 10:20:00', 7, 'Em manutenção', '2025-09-03 11:00:00');
 
 INSERT INTO monitoramento VALUES
 (default,'2026-09-01 08:00:00', 125, 45.5, 80.2),
@@ -70,3 +85,47 @@ INSERT INTO monitoramento VALUES
 (default,'2026-09-04 16:00:00', 410, 95.2, 55.8),
 (default,'2026-09-05 18:30:00', 380, 88.9, 58.5);
 
+
+-- SELECTS TABELA CLIENTE --
+SELECT * FROM cliente;
+
+SELECT
+	CONCAT('Empresa: ', nomeFantasia, ' | CNPJ: ', CNPJ, ' | Responsável: ', responsavel, ' | Email: ', email) AS 'Dados do Cliente'
+FROM cliente;
+
+SELECT nomeFantasia, CNPJ, responsavel, email FROM cliente
+	WHERE nomeFantasia LIKE 'Supermercado%';
+    
+SELECT nomeFantasia AS 'Empresa', responsavel AS 'Responsável', telefone AS 'Telefone para contato', cidade AS 'Cidade',
+	CASE
+    WHEN UF = 'SP'
+    THEN 'São Paulo'
+    END AS 'Estado'
+FROM cliente
+	WHERE UF = 'SP';
+    
+-- SELECTS TABELA SENSOR --
+SELECT * FROM sensor;
+
+SELECT 
+	CONCAT('Tipo de sensor: ', tipoSensor, ' | Data de Instalação: ', dtInstalacao, ' | Localização do sensor: Corredor ', corredor, 
+    ' | Status: ', statuss) AS 'Dados do Sensor'
+FROM sensor;
+
+SELECT tipoSensor AS 'Nome do sensor',
+	CASE
+    WHEN tipoSensor = 'HC-SR04'
+	THEN 'Sensor Ultrassônico de Distância'
+    END AS 'Tipo do sensor',
+    CONCAT('Corredor ', corredor) AS 'Corredor da instalação', dtInstalacao AS 'Data da instalação'
+FROM sensor;
+
+-- SELECTS TABELA MONITORAMENTO -- 
+SELECT * FROM monitoramento;
+
+SELECT fluxoPessoas AS 'Quantidade de pessoas que passaram no corredor', tempoPermanenciaS AS 'Tempo de permanência (seg)', distanciaCm AS 'Distância (cm)'
+FROM monitoramento;
+
+SELECT fluxoPessoas AS 'Quantidade de pessoas que passaram no corredor', tempoPermanenciaS AS 'Tempo de permanência (seg)',
+	CONCAT(FORMAT((fluxoPessoas / tempoPermanenciaS), 2)) AS 'Tempo de permanencia médio por pessoa'
+FROM monitoramento;
