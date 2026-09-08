@@ -10,7 +10,7 @@
     <h1>Calculo do custo do nosso Produto</h1>
 
 
-    <span>| Valor Unitário: R$500.00 |</span>
+    <span>| Valor Unitário: R$500.00 | Desconto de 10% a menos do valor por mais de 10 sensores comprados |</span>
     <br>
     <br>
 
@@ -19,9 +19,9 @@
     <input type="text" id="ipt_quant_sensores">
     <br>
 
-    <label for="ipt_valor_investido">Insira o valor de investimento.</label>
+    <label for="ipt_valor_investido_sensores">Insira o valor de investimento.</label>
     <br>
-    <input type="text" id="ipt_valor_investido" placeholder="Por exemplo: 500.99">
+    <input type="text" id="ipt_valor_investido_sensores" placeholder="Por exemplo: 500.99">
     <br>
 
     <button onclick="calcularRoiSensor()">Calcular</button>
@@ -30,7 +30,54 @@
     <div id="div_exibir_roi_sensores"></div>
     <br>
 
-    <h1></h1>
+    <h1>Simulador de Interesse de Produtos</h1>
+
+    <label for="ipt_nome_produto">Insira o nome do produto que deseja analisar </label>
+    <br>
+    <input type="text" id="ipt_nome_produto">
+    <br>
+
+    <label for="ipt_quant_pessoas_produto">Insira a quantidade de pessoas que passaram pelos corredores desses produtos neste mês </label>
+    <br>
+    <input type="text" id="ipt_quant_pessoas_produto">
+    <br>
+    
+    <label for="ipt_quant_vendas_produto">Insira a quantidade de vendas desse produto neste mês</label>
+    <br>
+    <input type="text" id="ipt_quant_vendas_produto">
+    <br>
+
+
+    <button onclick="calcularInteresseProduto()">Analisar</button>
+    <br>
+
+    <div id="div_exibir_interesse_produto"></div>
+    <br>
+
+
+    <h1>Simulador de Interesse de Gôndulas</h1>
+
+    <label for="ipt_nome_gondula_interesse">Insira o nome da gôndula que deseja analisar </label>
+    <br>
+    <input type="text" id="ipt_nome_gondula_interesse">
+    <br>
+
+    <label for="ipt_quant_pessoas_gondula">Insira a quantidade de pessoas que passaram por essa gôndula neste mês </label>
+    <br>
+    <input type="text" id="ipt_quant_pessoas_gondula">
+    <br>
+    
+    <label for="ipt_quant_vendas_gondula">Insira a quantidade de vendas desse produto neste mês</label>
+    <br>
+    <input type="text" id="ipt_quant_vendas_gondula">
+    <br>
+
+
+    <button onclick="calcularInteresseGondula()">Analisar</button>
+    <br>
+
+    <div id="div_exibir_interesse_gondola"></div>
+
 
 
     
@@ -43,7 +90,7 @@
 
         let quantSensor = Number(ipt_quant_sensores.value);
 
-        let valorInvestidoSensor = Number(ipt_valor_investido.value);
+        let valorInvestidoSensor = Number(ipt_valor_investido_sensores.value);
 
         let valorTotalSensor = (quantSensor * 500).toFixed(2);
 
@@ -53,11 +100,13 @@
 
         let porcentagemValorInvestido = ((valorInvestidoSensor / valorTotalSensor)  * 100).toFixed(2);
 
+        let porcentagemValorInvestidoDesconto = (( valorInvestidoSensor /valorTotalDescontoSensor) * 100).toFixed(2);
+
         let mensagem = `O valor final será R$${valorTotalSensor}, isso equivale à ${porcentagemValorInvestido}% de seu  valor de investimento. `;
 
         let mensagemDesconto = `Parabéns! Você ganhou um desconto de 10% por ter comprado mais de 10 sensores. 
                                 <br> 
-                                De R$${valorTotalSensor}, o valor final ficou por: R$${valorTotalDescontoSensor}, isso equivale à ${porcentagemValorInvestido}% de seu  valor de investimento.`;
+                                De R$${valorTotalSensor}, o valor final ficou por: R$${valorTotalDescontoSensor}, isso equivale à ${porcentagemValorInvestidoDesconto}% de seu  valor de investimento.`;
 
         let mensagemErroQuantSensor = `Erro! A quantidade de sensores é zero ou negativa.`;
 
@@ -90,6 +139,124 @@
             div_exibir_roi_sensores.innerHTML = mensagemErroQuantSensor;
 
         }
+
+    }
+
+    function calcularInteresseProduto(){
+
+        let nomeProduto = ipt_nome_produto.value;
+
+        let quantPessoasPassadasProduto = Number(ipt_quant_pessoas_produto.value);
+
+        let quantVendasProduto = Number(ipt_quant_vendas_produto.value);
+
+        let porcentagemVendasPorPessoaProduto = ((quantVendasProduto / quantPessoasPassadasProduto ) * 100).toFixed(2);
+
+
+        let mensagemPadraoProduto = `O produto ${nomeProduto} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoaProduto}%.`
+
+        let mensagemInteresseProduto = `Parabéns! As pessoas parecem estar muito interessadas nesse produto.<br>` + mensagemPadraoProduto;
+
+        let mensagemDesinteresseProduto = `Parece que as pessoas não estão muito interessadas nesse produto. Talvez seja melhor troca-lo de lugar. <br>` + mensagemPadraoProduto;
+
+        let mensagemErroPessoasProduto = `Erro! A quantidade de pessoas é negativa.`;
+
+        let mensagemErroVendasProduto = `Erro! A quantidade de vendas é negativa.`;
+
+
+
+            if (quantPessoasPassadasProduto >= 0) {
+
+            if (quantVendasProduto >= 0){
+
+                if (porcentagemVendasPorPessoaProduto > 40) {
+
+                div_exibir_interesse_produto.innerHTML = mensagemInteresseProduto;
+
+                } else if (porcentagemVendasPorPessoaProduto > 10){
+
+                div_exibir_interesse_produto.innerHTML = mensagemPadraoProduto;
+
+                } else {
+
+                div_exibir_interesse_produto.innerHTML = mensagemDesinteresseProduto;           
+
+                }
+
+            } else {
+
+                div_exibir_interesse_produto.innerHTML = mensagemErroVendasProduto;
+
+            }
+
+
+
+        } else {
+
+            div_exibir_interesse_produto.innerHTML = mensagemErroPessoasProduto;
+
+        }
+
+
+
+
+    }
+
+        function calcularInteresseGondula(){
+
+        let nomeGondula= ipt_nome_gondula_interesse.value;
+
+        let quantPessoasPassadasGondula = Number(ipt_quant_pessoas_gondula.value);
+
+        let quantVendasGondula = Number(ipt_quant_vendas_gondula.value);
+
+        let porcentagemVendasPorPessoaGondula = ((quantVendasGondula / quantPessoasPassadasGondula ) * 100).toFixed(2);
+
+
+        let mensagemPadraoGondula = `A gôndula ${nomeGondula} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoaGondula}%.`
+
+        let mensagemInteresseGondula = `Parabéns! As pessoas parecem estar muito interessadas nessa gôndula.<br>` + mensagemPadraoGondula;
+
+        let mensagemDesinteresseGondula = `Parece que as pessoas não estão muito interessadas nesse gôndula. Talvez seja melhor troca-la de lugar ou trocar seus produtos. <br>` + mensagemPadraoGondula;
+
+        let mensagemErroPessoasGondula = `Erro! A quantidade de pessoas é negativa.`;
+
+        let mensagemErroVendasGondula = `Erro! A quantidade de vendas é negativa.`;
+
+
+        if (quantPessoasPassadasGondula >= 0) {
+
+            if (quantVendasGondula >= 0){
+
+                if (porcentagemVendasPorPessoaGondula > 40) {
+
+                div_exibir_interesse_gondola.innerHTML = mensagemInteresseGondula;
+
+                } else if (porcentagemVendasPorPessoaGondula > 10){
+
+                div_exibir_interesse_gondola.innerHTML = mensagemPadraoGondula;
+
+                } else {
+
+                 div_exibir_interesse_gondola.innerHTML = mensagemDesinteresseGondula;           
+
+                }
+
+            } else {
+
+                div_exibir_interesse_gondola.innerHTML = mensagemErroVendasGondula;
+
+            }
+
+
+
+        } else {
+
+            div_exibir_interesse_gondola.innerHTML = mensagemErroPessoasGondula;
+
+        }
+
+
 
     }
 
