@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira</title>
+</head>
+<body>
+
+    <h1>Calculo do custo do nosso Produto</h1>
+
+
+    <span>| Valor Unitário: R$500.00 |</span>
+    <br>
+    <br>
+
+    <label for="ipt_quant_sensores">Insira quandos sensores serão solicitados.</label>
+    <br>
+    <input type="text" id="ipt_quant_sensores">
+    <br>
+
+    <label for="ipt_valor_investido">Insira o valor de investimento.</label>
+    <br>
+    <input type="text" id="ipt_valor_investido" placeholder="Por exemplo: 500.99">
+    <br>
+
+    <button onclick="calcularRoiSensor()">Calcular</button>
+    <br>
+
+    <div id="div_exibir_roi_sensores"></div>
+    <br>
+
+    <h1></h1>
+
+
+    
+</body>
+</html>
+
+<script>
+
+    function calcularRoiSensor(){
+
+        let quantSensor = Number(ipt_quant_sensores.value);
+
+        let valorInvestidoSensor = Number(ipt_valor_investido.value);
+
+        let valorTotalSensor = (quantSensor * 500).toFixed(2);
+
+        let desconto = valorTotalSensor * 0.1;
+
+        let valorTotalDescontoSensor = (valorTotalSensor - desconto).toFixed(2);
+
+        let porcentagemValorInvestido = ((valorInvestidoSensor / valorTotalSensor)  * 100).toFixed(2);
+
+        let mensagem = `O valor final será R$${valorTotalSensor}, isso equivale à ${porcentagemValorInvestido}% de seu  valor de investimento. `;
+
+        let mensagemDesconto = `Parabéns! Você ganhou um desconto de 10% por ter comprado mais de 10 sensores. 
+                                <br> 
+                                De R$${valorTotalSensor}, o valor final ficou por: R$${valorTotalDescontoSensor}, isso equivale à ${porcentagemValorInvestido}% de seu  valor de investimento.`;
+
+        let mensagemErroQuantSensor = `Erro! A quantidade de sensores é zero ou negativa.`;
+
+        let mensagemErroValorInvestido = `Erro! O valor investido é zero ou negativa.`;
+
+        if (quantSensor > 0 ) {
+
+            if (valorInvestidoSensor > 0){
+
+                if (quantSensor > 10 ){
+
+                div_exibir_roi_sensores.innerHTML = mensagemDesconto;                    
+
+
+                } else {
+
+                div_exibir_roi_sensores.innerHTML = mensagem;
+
+                }
+
+
+            } else {
+
+                div_exibir_roi_sensores.innerHTML = mensagemErroValorInvestido;
+
+            }
+
+        } else {
+
+            div_exibir_roi_sensores.innerHTML = mensagemErroQuantSensor;
+
+        }
+
+    }
+
+
+
+</script>
+
+
+<!-- ## Considerações finais para a calculadora do grupo:
+
+- calculo de custo de sensores
+
+- Inserir cálculo de ROI (Julia, Bianca, Pedro);
+
+- Inserir (estimativa) quantas pessoas passaram na frente do produto (questão de interesse) (Zanee e Kauã);
+
+- Inserir desconto (Greg) *a partir de quantas unidades daremos desconto? Pensar nessa questão, tbm tem que definir o preço final do nosso produto;
+
+- **Não** considerar estoque para que não haja confusão em relação ao que nosso produto oferece (inteligência vs controle de estoque);
+
+- Utilizar a ideia da Gabi/Isa de prateleira vazia, custo e média da venda do produto (para calcular perda monetária com prateleira vazia); *DESCARTADO*
+
+- Verificar se estamos abordando (pitch de vendas):
+    - dor do cliente;
+    - nosso produto;
+    - como nosso produto cura a dor do cliente. -->
+
+
+
+    <!-- Requisitos de organização Simulador_Financeiro_Grupo.
+
+
+    1.html
+    1.1. padronizar os inputs
+    1.1.1 (snake_case) nomes minúsculos separado por anderline 
+    1.2. organizar a exibição das informações (estrututação de tag)
+    1.2.3. Priorizaremos Label, input abaixo do texto, sem css, botão apenas para executar função.
+
+    2.javascript
+    2.1. padronizar o nome das variaveis
+    2.1.1. (camelCase )A primeira palavra começa com letra minúscula e todas as palavras seguintes começam com letra maiúscula, sem espaços.
+
+    2.2. definir a prioridade das funções
+    2.2.1 Calculo de ROI - Não utilizar botão para adicionar sensor
+          estimativa passagem (media de vendas)
+          desconto
+          2.2.2 If sensor > 0, if investimento > 0, if sensor > 0 e investimento > 0, else 'por favor, insira algum valor'
+
+    2.3. fundir as funções semelhantes em uma só
+    2.4. formatar as funções para seguir o padrão
+    2.4. testar as funções.
+
+
+    inpt_sensor_de_aproximacao  -->
