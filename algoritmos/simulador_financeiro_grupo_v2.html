@@ -14,11 +14,9 @@
     <br>
     <br>
 
-    <!-- Capturação de valores inseridos pelo usuário, junto com facilitadores de experiência. Ao final de cada bloco de código, um botão que chama a função designada e o meio de exibição dos valores calculados. -->
-
-    <label for="ipt_quant_gondolas">Insira quantas gôndolas precisarão de sensores.</label>
+    <label for="ip_quant_gondolas">Insira quantas gôndolas você precisa de sensores.</label>
     <br>
-    <input type="text" id="ipt_quant_gondolas">
+    <input type="text" id="ip_quant_gondolas">
     <br>
 
     <label for="ipt_valor_investido_sensores">Insira o valor de investimento.</label>
@@ -57,24 +55,25 @@
     <br>
 
 
-    <h1>Simulador de Interesse de Gôndolas</h1>
+    <h1>Simulador de Interesse de Gondolas</h1>
 
-    <label for="ipt_nome_gondola_interesse">Insira o nome da gôndola que deseja analisar </label>
+    <label for="ipt_nome_gondula_interesse">Insira o nome da gondola que deseja analisar </label>
     <br>
-    <input type="text" id="ipt_nome_gondola_interesse">
+    <input type="text" id="ipt_nome_gondula_interesse">
     <br>
 
-    <label for="ipt_quant_pessoas_gondola">Insira a quantidade de pessoas que passaram por essa gôndola neste mês </label>
+    <label for="ipt_quant_pessoas_gondula">Insira a quantidade de pessoas que passaram por essa gondola neste mês </label>
     <br>
-    <input type="text" id="ipt_quant_pessoas_gondola">
+    <input type="text" id="ipt_quant_pessoas_gondula">
     <br>
     
-    <label for="ipt_quant_vendas_gondola">Insira a quantidade de vendas por essa gôndola neste mês</label>
+    <label for="ipt_quant_vendas_gondula">Insira a quantidade de vendas por essa gondola neste mês</label>
     <br>
     <input type="text" id="ipt_quant_vendas_gondola">
     <br>
 
-    <button onclick="calcularInteresseGondola()">Analisar</button>
+
+    <button onclick="calcularInteressegondola()">Analisar</button>
     <br>
 
     <div id="div_exibir_interesse_gondola"></div>
@@ -87,39 +86,37 @@
 
 <script>
 
-    // Declarações de funções e variáveis, além de calculos e lógicas de decisão. Junto à isso, capturação e exibição de erros, para o usuário ter uma melhor experiência.
-
     function calcularRoiSensor(){
 
-        let quantGondola = Number(ipt_quant_gondolas.value);
+        let quantGondolas = Number(ip_quant_gondolas.value);
 
         let valorInvestidoSensor = Number(ipt_valor_investido_sensores.value);
 
-        let valorTotalSensor = (quantGondola * 500).toFixed(2);
+        let valorTotalSensor = (quantGondolas * 500).toFixed(2);
 
         let desconto = valorTotalSensor * 0.1;
 
         let valorTotalDescontoSensor = (valorTotalSensor - desconto).toFixed(2);
 
-        let porcentagemValorInvestido = ((valorTotalSensor /valorInvestidoSensor )  * 100).toFixed(2);
+        let porcentagemValorInvestido = ((valorInvestidoSensor / valorTotalSensor)  * 100).toFixed(2);
 
         let porcentagemValorInvestidoDesconto = (( valorInvestidoSensor /valorTotalDescontoSensor) * 100).toFixed(2);
 
-        let mensagem = `Para ${quantGondola} gôndolas, serão necessários ${quantGondola} sensores. O valor total para a instalação desses sensores será R$${valorTotalSensor}, isso equivale à ${porcentagemValorInvestido}% de seu valor de investimento. `;
+        let mensagem = `Para ${quantGondolas} gôndolas, serão necessários ${quantGondolas} sensores. O valor total a ser pago será R$${valorTotalSensor}, isso equivale à ${porcentagemValorInvestido}% de seu  valor de investimento. `;
 
         let mensagemDesconto = `Parabéns! Você ganhou um desconto de 10% por ter comprado mais de 10 sensores. 
                                 <br> 
                                 De R$${valorTotalSensor}, o valor final ficou por: R$${valorTotalDescontoSensor}, isso equivale à ${porcentagemValorInvestidoDesconto}% de seu  valor de investimento.`;
 
-        let mensagemErroQuantGondola = `Erro! A quantidade de sensores é zero ou negativa.`;
+        let mensagemErroquantGondolas = `Erro! A quantidade de sensores é zero ou negativa.`;
 
         let mensagemErroValorInvestido = `Erro! O valor investido é zero ou negativa.`;
 
-        if (quantGondola > 0 ) {
+        if (quantGondolas > 0 ) {
 
             if (valorInvestidoSensor > 0){
 
-                if (quantGondola > 10 ){
+                if (quantGondolas > 10 ){
 
                 div_exibir_roi_sensores.innerHTML = mensagemDesconto;                    
 
@@ -139,7 +136,7 @@
 
         } else {
 
-            div_exibir_roi_sensores.innerHTML = mensagemErroQuantGondola;
+            div_exibir_roi_sensores.innerHTML = mensagemErroquantGondolas;
 
         }
 
@@ -207,47 +204,47 @@
 
         function calcularInteresseGondola(){
 
-        let nomeGondola= ipt_nome_gondola_interesse.value;
+        let nomeGondula= ipt_nome_gondula_interesse.value;
 
-        let quantPessoasPassadasGondola = Number(ipt_quant_pessoas_gondola.value);
+        let quantPessoasPassadasGondula = Number(ipt_quant_pessoas_gondula.value);
 
-        let quantVendasGondola = Number(ipt_quant_vendas_gondola.value);
+        let quantVendasGondula = Number(ipt_quant_vendas_gondula.value);
 
-        let porcentagemVendasPorPessoaGondola = ((quantVendasGondola / quantPessoasPassadasGondola ) * 100).toFixed(2);
-
-
-        let mensagemPadraoGondola = `A gôndola ${nomeGondola} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoaGondola}%.`
-
-        let mensagemInteresseGondola = `Parabéns! As pessoas parecem estar muito interessadas nessa gôndola.<br>` + mensagemPadraoGondola;
-
-        let mensagemDesinteresseGondola = `Parece que as pessoas não estão muito interessadas nesse gôndola. Talvez seja melhor troca-la de lugar ou trocar seus produtos. <br>` + mensagemPadraoGondola;
-
-        let mensagemErroPessoasGondola = `Erro! A quantidade de pessoas é negativa.`;
-
-        let mensagemErroVendasGondola = `Erro! A quantidade de vendas é negativa.`;
+        let porcentagemVendasPorPessoaGondula = ((quantVendasGondula / quantPessoasPassadasGondula ) * 100).toFixed(2);
 
 
-        if (quantPessoasPassadasGondola >= 0) {
+        let mensagemPadraoGondula = `A gondola ${nomeGondula} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoaGondula}%.`
 
-            if (quantVendasGondola >= 0){
+        let mensagemInteresseGondula = `Parabéns! As pessoas parecem estar muito interessadas nessa gondola.<br>` + mensagemPadraoGondula;
 
-                if (porcentagemVendasPorPessoaGondola > 40) {
+        let mensagemDesinteresseGondula = `Parece que as pessoas não estão muito interessadas nesse gondola. Talvez seja melhor troca-la de lugar ou trocar seus produtos. <br>` + mensagemPadraoGondula;
 
-                div_exibir_interesse_gondola.innerHTML = mensagemInteresseGondola;
+        let mensagemErroPessoasGondula = `Erro! A quantidade de pessoas é negativa.`;
 
-                } else if (porcentagemVendasPorPessoaGondola > 10){
+        let mensagemErroVendasGondula = `Erro! A quantidade de vendas é negativa.`;
 
-                div_exibir_interesse_gondola.innerHTML = mensagemPadraoGondola;
+
+        if (quantPessoasPassadasGondula >= 0) {
+
+            if (quantVendasGondula >= 0){
+
+                if (porcentagemVendasPorPessoaGondula > 40) {
+
+                div_exibir_interesse_gondola.innerHTML = mensagemInteresseGondula;
+
+                } else if (porcentagemVendasPorPessoaGondula > 10){
+
+                div_exibir_interesse_gondola.innerHTML = mensagemPadraoGondula;
 
                 } else {
 
-                 div_exibir_interesse_gondola.innerHTML = mensagemDesinteresseGondola;           
+                 div_exibir_interesse_gondola.innerHTML = mensagemDesinteresseGondula;           
 
                 }
 
             } else {
 
-                div_exibir_interesse_gondola.innerHTML = mensagemErroVendasGondola;
+                div_exibir_interesse_gondola.innerHTML = mensagemErroVendasGondula;
 
             }
 
@@ -255,7 +252,7 @@
 
         } else {
 
-            div_exibir_interesse_gondola.innerHTML = mensagemErroPessoasGondola;
+            div_exibir_interesse_gondola.innerHTML = mensagemErroPessoasGondula;
 
         }
 
