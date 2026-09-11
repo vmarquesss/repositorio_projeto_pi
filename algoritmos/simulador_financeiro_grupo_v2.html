@@ -7,8 +7,9 @@
 </head>
 <body>
 
-    <h1>Calculo do custo do nosso Produto</h1>
+    <h1>Simulador de compra do nosso Produto</h1>
 
+    <!-- Blocos de capturação de valores inseridos pelo usuário, com melhor experiência para facilitação de inserção. Após cada um dos blocos, um botão para chamar a função designada. Abaixo do botão, um espaço para exibir a mensagem. -->
 
     <span>| Valor Unitário: R$500.00 | Desconto de 10% a menos do valor por mais de 10 sensores comprados |</span>
     <br>
@@ -55,25 +56,25 @@
     <br>
 
 
-    <h1>Simulador de Interesse de Gondolas</h1>
+    <h1>Simulador de Interesse de Gôndolas</h1>
 
-    <label for="ipt_nome_gondula_interesse">Insira o nome da gondola que deseja analisar </label>
+    <label for="ipt_nome_gondola_interesse">Insira o nome da gôndola que deseja analisar </label>
     <br>
-    <input type="text" id="ipt_nome_gondula_interesse">
+    <input type="text" id="ipt_nome_gondola_interesse">
     <br>
 
-    <label for="ipt_quant_pessoas_gondula">Insira a quantidade de pessoas que passaram por essa gondola neste mês </label>
+    <label for="ipt_quant_pessoas_gondola">Insira a quantidade de pessoas que passaram por essa gôndola neste mês </label>
     <br>
-    <input type="text" id="ipt_quant_pessoas_gondula">
+    <input type="text" id="ipt_quant_pessoas_gondola">
     <br>
     
-    <label for="ipt_quant_vendas_gondula">Insira a quantidade de vendas por essa gondola neste mês</label>
+    <label for="ipt_quant_vendas_gondula">Insira a quantidade de vendas por essa gôndola neste mês</label>
     <br>
     <input type="text" id="ipt_quant_vendas_gondola">
     <br>
 
 
-    <button onclick="calcularInteressegondola()">Analisar</button>
+    <button onclick="calcularInteresseGondola()">Analisar</button>
     <br>
 
     <div id="div_exibir_interesse_gondola"></div>
@@ -85,6 +86,8 @@
 </html>
 
 <script>
+
+    // Declaração de funções e variáveis, utilizando os valores capturados pelas inserções do usuário e os transformando e calculando em valores significativos. Possuem estruturas de decisões para capturação e exibição de erros.
 
     function calcularRoiSensor(){
 
@@ -98,7 +101,7 @@
 
         let valorTotalDescontoSensor = (valorTotalSensor - desconto).toFixed(2);
 
-        let porcentagemValorInvestido = ((valorInvestidoSensor / valorTotalSensor)  * 100).toFixed(2);
+        let porcentagemValorInvestido = ((valorTotalSensor / valorInvestidoSensor)  * 100).toFixed(2);
 
         let porcentagemValorInvestidoDesconto = (( valorInvestidoSensor /valorTotalDescontoSensor) * 100).toFixed(2);
 
@@ -204,37 +207,37 @@
 
         function calcularInteresseGondola(){
 
-        let nomeGondula= ipt_nome_gondula_interesse.value;
+        let nomeGondola= ipt_nome_gondola_interesse.value;
 
-        let quantPessoasPassadasGondula = Number(ipt_quant_pessoas_gondula.value);
+        let quantPessoasPassadasGondola = Number(ipt_quant_pessoas_gondola.value);
 
-        let quantVendasGondula = Number(ipt_quant_vendas_gondula.value);
+        let quantVendasGondola = Number(ipt_quant_vendas_gondola.value);
 
-        let porcentagemVendasPorPessoaGondula = ((quantVendasGondula / quantPessoasPassadasGondula ) * 100).toFixed(2);
+        let porcentagemVendasPorPessoaGondola = ((quantVendasGondola / quantPessoasPassadasGondola ) * 100).toFixed(2);
 
 
-        let mensagemPadraoGondula = `A gondola ${nomeGondula} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoaGondula}%.`
+        let mensagemPadraoGondola = `A gondola ${nomeGondola} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoaGondola}%.`
 
-        let mensagemInteresseGondula = `Parabéns! As pessoas parecem estar muito interessadas nessa gondola.<br>` + mensagemPadraoGondula;
+        let mensagemInteresseGondula = `Parabéns! As pessoas parecem estar muito interessadas nessa gôndola.<br>` + mensagemPadraoGondola;
 
-        let mensagemDesinteresseGondula = `Parece que as pessoas não estão muito interessadas nesse gondola. Talvez seja melhor troca-la de lugar ou trocar seus produtos. <br>` + mensagemPadraoGondula;
+        let mensagemDesinteresseGondula = `Parece que as pessoas não estão muito interessadas nesse gôndola. Talvez seja melhor troca-la de lugar ou trocar seus produtos. <br>` + mensagemPadraoGondola;
 
         let mensagemErroPessoasGondula = `Erro! A quantidade de pessoas é negativa.`;
 
         let mensagemErroVendasGondula = `Erro! A quantidade de vendas é negativa.`;
 
 
-        if (quantPessoasPassadasGondula >= 0) {
+        if (quantPessoasPassadasGondola >= 0) {
 
-            if (quantVendasGondula >= 0){
+            if (quantVendasGondola >= 0){
 
-                if (porcentagemVendasPorPessoaGondula > 40) {
+                if (porcentagemVendasPorPessoaGondola > 40) {
 
                 div_exibir_interesse_gondola.innerHTML = mensagemInteresseGondula;
 
-                } else if (porcentagemVendasPorPessoaGondula > 10){
+                } else if (porcentagemVendasPorPessoaGondola > 10){
 
-                div_exibir_interesse_gondola.innerHTML = mensagemPadraoGondula;
+                div_exibir_interesse_gondola.innerHTML = mensagemPadraoGondola;
 
                 } else {
 
