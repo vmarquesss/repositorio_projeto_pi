@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira</title>
+</head>
+<body>
+
+    <h1>Simulador de compra do nosso Produto</h1>
+
+    <!-- Blocos de capturação de valores inseridos pelo usuário, com melhor experiência para facilitação de inserção. Após cada um dos blocos, um botão para chamar a função designada. Abaixo do botão, um espaço para exibir a mensagem. -->
+
+    <span>| Valor Unitário: R$500.00 | Desconto de 10% a menos do valor por mais de 10 sensores comprados |</span>
+    <br>
+    <br>
+
+    <label for="ip_quant_gondolas">Insira em quantas gôndolas você precisará de sensores.</label>
+    <br>
+    <input type="text" id="ip_quant_gondolas">
+    <br>
+
+    <label for="ipt_valor_investido_sensores">Insira o valor de investimento em reais.</label>
+    <br>
+    <input type="text" id="ipt_valor_investido_sensores" placeholder="Por exemplo: 500.99">
+    <br>
+
+    <button onclick="calcularRoiSensor()">Calcular</button>
+    <br>
+
+    <div id="div_exibir_roi_sensores"></div>
+    <br>
+
+    <h1>Simulador de Interesse de Produtos</h1>
+
+    <label for="ipt_nome_produto">Insira o nome do produto que deseja analisar </label>
+    <br>
+    <input type="text" id="ipt_nome_produto">
+    <br>
+
+    <label for="ipt_quant_pessoas_produto">Insira a quantidade de pessoas que passaram pelos corredores desse produto neste mês </label>
+    <br>
+    <input type="text" id="ipt_quant_pessoas_produto">
+    <br>
+    
+    <label for="ipt_quant_vendas_produto">Insira a quantidade de vendas desse produto neste mês</label>
+    <br>
+    <input type="text" id="ipt_quant_vendas_produto">
+    <br>
+
+
+    <button onclick="calcularInteresseProduto()">Analisar</button>
+    <br>
+
+    <div id="div_exibir_interesse_produto"></div>
+    <br>
+
+
+    <h1>Simulador de Interesse de Gôndolas</h1>
+
+    <label for="ipt_nome_gondola_interesse">Insira o nome da gôndola que deseja analisar </label>
+    <br>
+    <input type="text" id="ipt_nome_gondola_interesse">
+    <br>
+
+    <label for="ipt_quant_pessoas_gondola">Insira a quantidade de pessoas que passaram por essa gôndola neste mês </label>
+    <br>
+    <input type="text" id="ipt_quant_pessoas_gondola">
+    <br>
+    
+    <label for="ipt_quant_vendas_gondula">Insira a quantidade de vendas por essa gôndola neste mês</label>
+    <br>
+    <input type="text" id="ipt_quant_vendas_gondola">
+    <br>
+
+
+    <button onclick="calcularInteresseGondola()">Analisar</button>
+    <br>
+
+    <div id="div_exibir_interesse_gondola"></div>
+
+
+
+    
+</body>
+</html>
+
+<script>
+
+    // Declaração de funções e variáveis, utilizando os valores capturados pelas inserções do usuário e os transformando e calculando em valores significativos. Possuem estruturas de decisões para capturação e exibição de erros.
+
+    function calcularRoiSensor(){
+
+        let quantGondolas = Number(ip_quant_gondolas.value);
+
+        let valorInvestidoSensor = Number(ipt_valor_investido_sensores.value);
+
+        let valorTotalSensor = (quantGondolas * 500).toFixed(2);
+
+        let desconto = valorTotalSensor * 0.1;
+
+        let valorTotalDescontoSensor = (valorTotalSensor - desconto).toFixed(2);
+
+        let porcentagemValorInvestido = ((valorTotalSensor / valorInvestidoSensor)  * 100).toFixed(2);
+
+        let porcentagemValorInvestidoDesconto = (( valorInvestidoSensor /valorTotalDescontoSensor) * 100).toFixed(2);
+
+        let mensagem = `Para ${quantGondolas} gôndolas, serão necessários ${quantGondolas} sensores. O valor total a ser pago será R$${valorTotalSensor}, isso equivale à ${porcentagemValorInvestido}% de seu  valor de investimento. `;
+
+        let mensagemDesconto = `Parabéns! Você ganhou um desconto de 10% por ter comprado mais de 10 sensores. 
+                                <br> 
+                                De R$${valorTotalSensor}, o valor final ficou por: R$${valorTotalDescontoSensor}, isso equivale à ${porcentagemValorInvestidoDesconto}% de seu  valor de investimento.`;
+
+        let mensagemErroquantGondolas = `Erro! A quantidade de sensores é zero ou negativa.`;
+
+        let mensagemErroValorInvestido = `Erro! O valor investido é zero ou negativa.`;
+
+        if (quantGondolas > 0 ) {
+
+            if (valorInvestidoSensor > 0){
+
+                if (quantGondolas > 10 ){
+
+                div_exibir_roi_sensores.innerHTML = mensagemDesconto;                    
+
+
+                } else {
+
+                div_exibir_roi_sensores.innerHTML = mensagem;
+
+                }
+
+
+            } else {
+
+                div_exibir_roi_sensores.innerHTML = mensagemErroValorInvestido;
+
+            }
+
+        } else {
+
+            div_exibir_roi_sensores.innerHTML = mensagemErroquantGondolas;
+
+        }
+
+    }
+
+    function calcularInteresseProduto(){
+
+        let nomeProduto = ipt_nome_produto.value;
+
+        let quantPessoasPassadasProduto = Number(ipt_quant_pessoas_produto.value);
+
+        let quantVendasProduto = Number(ipt_quant_vendas_produto.value);
+
+        let porcentagemVendasPorPessoaProduto = ((quantVendasProduto / quantPessoasPassadasProduto ) * 100).toFixed(2);
+
+
+        let mensagemPadraoProduto = `O produto ${nomeProduto} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoaProduto}%.`
+
+        let mensagemInteresseProduto = `Parabéns! As pessoas parecem estar muito interessadas nesse produto.<br>` + mensagemPadraoProduto;
+
+        let mensagemDesinteresseProduto = `Parece que as pessoas não estão muito interessadas nesse produto. Talvez seja melhor troca-lo de lugar. <br>` + mensagemPadraoProduto;
+
+        let mensagemErroPessoasProduto = `Erro! A quantidade de pessoas é negativa.`;
+
+        let mensagemErroVendasProduto = `Erro! A quantidade de vendas é negativa.`;
+
+
+
+            if (quantPessoasPassadasProduto >= 0) {
+
+            if (quantVendasProduto >= 0){
+
+                if (porcentagemVendasPorPessoaProduto > 40) {
+
+                div_exibir_interesse_produto.innerHTML = mensagemInteresseProduto;
+
+                } else if (porcentagemVendasPorPessoaProduto > 10){
+
+                div_exibir_interesse_produto.innerHTML = mensagemPadraoProduto;
+
+                } else {
+
+                div_exibir_interesse_produto.innerHTML = mensagemDesinteresseProduto;           
+
+                }
+
+            } else {
+
+                div_exibir_interesse_produto.innerHTML = mensagemErroVendasProduto;
+
+            }
+
+
+
+        } else {
+
+            div_exibir_interesse_produto.innerHTML = mensagemErroPessoasProduto;
+
+        }
+
+
+
+
+    }
+
+        function calcularInteresseGondola(){
+
+        let nomeGondola= ipt_nome_gondola_interesse.value;
+
+        let quantPessoasPassadasGondola = Number(ipt_quant_pessoas_gondola.value);
+
+        let quantVendasGondola = Number(ipt_quant_vendas_gondola.value);
+
+        let porcentagemVendasPorPessoaGondola = ((quantVendasGondola / quantPessoasPassadasGondola ) * 100).toFixed(2);
+
+
+        let mensagemPadraoGondola = `A gôndola ${nomeGondola} tem uma porcentagem de vendas de ${porcentagemVendasPorPessoaGondola}%.`
+
+        let mensagemInteresseGondula = `Parabéns! As pessoas parecem estar muito interessadas nessa gôndola.<br>` + mensagemPadraoGondola;
+
+        let mensagemDesinteresseGondula = `Parece que as pessoas não estão muito interessadas nesse gôndola. Talvez seja melhor troca-la de lugar ou trocar seus produtos. <br>` + mensagemPadraoGondola;
+
+        let mensagemErroPessoasGondula = `Erro! A quantidade de pessoas é negativa.`;
+
+        let mensagemErroVendasGondula = `Erro! A quantidade de vendas é negativa.`;
+
+
+        if (quantPessoasPassadasGondola >= 0) {
+
+            if (quantVendasGondola >= 0){
+
+                if (porcentagemVendasPorPessoaGondola > 40) {
+
+                div_exibir_interesse_gondola.innerHTML = mensagemInteresseGondula;
+
+                } else if (porcentagemVendasPorPessoaGondola > 10){
+
+                div_exibir_interesse_gondola.innerHTML = mensagemPadraoGondola;
+
+                } else {
+
+                 div_exibir_interesse_gondola.innerHTML = mensagemDesinteresseGondula;           
+
+                }
+
+            } else {
+
+                div_exibir_interesse_gondola.innerHTML = mensagemErroVendasGondula;
+
+            }
+
+
+
+        } else {
+
+            div_exibir_interesse_gondola.innerHTML = mensagemErroPessoasGondula;
+
+        }
+
+
+
+    }
+
+
+
+</script>
+
+
+<!-- ## Considerações finais para a calculadora do grupo:
+
+- calculo de custo de sensores
+
+- Inserir cálculo de ROI (Julia, Bianca, Pedro);
+
+- Inserir (estimativa) quantas pessoas passaram na frente do produto (questão de interesse) (Zanee e Kauã);
+
+- Inserir desconto (Greg) *a partir de quantas unidades daremos desconto? Pensar nessa questão, tbm tem que definir o preço final do nosso produto;
+
+- **Não** considerar estoque para que não haja confusão em relação ao que nosso produto oferece (inteligência vs controle de estoque);
+
+- Utilizar a ideia da Gabi/Isa de prateleira vazia, custo e média da venda do produto (para calcular perda monetária com prateleira vazia); *DESCARTADO*
+
+- Verificar se estamos abordando (pitch de vendas):
+    - dor do cliente;
+    - nosso produto;
+    - como nosso produto cura a dor do cliente. -->
+
+
+
+    <!-- Requisitos de organização Simulador_Financeiro_Grupo.
+
+
+    1.html
+    1.1. padronizar os inputs
+    1.1.1 (snake_case) nomes minúsculos separado por anderline 
+    1.2. organizar a exibição das informações (estrututação de tag)
+    1.2.3. Priorizaremos Label, input abaixo do texto, sem css, botão apenas para executar função.
+
+    2.javascript
+    2.1. padronizar o nome das variaveis
+    2.1.1. (camelCase )A primeira palavra começa com letra minúscula e todas as palavras seguintes começam com letra maiúscula, sem espaços.
+
+    2.2. definir a prioridade das funções
+    2.2.1 Calculo de ROI - Não utilizar botão para adicionar sensor
+          estimativa passagem (media de vendas)
+          desconto
+          2.2.2 If sensor > 0, if investimento > 0, if sensor > 0 e investimento > 0, else 'por favor, insira algum valor'
+
+    2.3. fundir as funções semelhantes em uma só
+    2.4. formatar as funções para seguir o padrão
+    2.4. testar as funções.
+
+
+    inpt_sensor_de_aproximacao  -->
